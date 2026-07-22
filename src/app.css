@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* Dark, mobile-first defaults. The app commits to a dark theme with a red/blue
+   "olympic" accent; large touch targets throughout. */
+@theme {
+	--color-brand-50: #eff6ff;
+	--color-brand-500: #3b82f6;
+	--color-brand-600: #2563eb;
+	--color-brand-700: #1d4ed8;
+	--color-gold: #fbbf24;
+	--color-silver: #cbd5e1;
+	--color-bronze: #d97706;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	touch-action: manipulation;
+}
+
+/* Respect the iOS safe area for the fixed bottom nav. */
+.pb-safe {
+	padding-bottom: env(safe-area-inset-bottom);
+}
+.pt-safe {
+	padding-top: env(safe-area-inset-top);
+}

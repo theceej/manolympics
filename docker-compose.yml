@@ -1,0 +1,25 @@
+services:
+  manolympics:
+    build: .
+    # Or use a prebuilt image once you publish one:
+    # image: ghcr.io/your-name/manolympics:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - manolympics-data:/data
+    environment:
+      # SQLite lives on the named volume below.
+      DATABASE_URL: file:/data/manolympics.db
+      # Passkeys: set these to YOUR host. RP_ID = registrable domain (no scheme/port).
+      RP_ID: ${RP_ID:-localhost}
+      RP_NAME: ${RP_NAME:-Manolympics}
+      ORIGIN: ${ORIGIN:-http://localhost:3000}
+      # The first person allowed to register (becomes admin). Everyone else needs an invite.
+      BOOTSTRAP_ADMIN_EMAIL: ${BOOTSTRAP_ADMIN_EMAIL:-you@example.com}
+      # Behind a reverse proxy terminating TLS, also set:
+      #   PROTOCOL_HEADER: x-forwarded-proto
+      #   HOST_HEADER: x-forwarded-host
+    restart: unless-stopped
+
+volumes:
+  manolympics-data:
