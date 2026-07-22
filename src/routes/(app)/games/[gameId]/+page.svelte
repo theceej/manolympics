@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import AttendeeChip from '$components/AttendeeChip.svelte';
+	import InfoTip from '$components/InfoTip.svelte';
 	import { fmtPoints, medalFor } from '$lib/utils';
 	import type { PageData } from './$types';
 	import type { LayoutData } from '../../$types';
@@ -74,7 +75,10 @@
 
 	<!-- Standings for this game -->
 	<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-4">
-		<h2 class="mb-3 font-bold">Standings</h2>
+		<h2 class="mb-3 font-bold">
+			Standings
+			<InfoTip text={isRoundRobin ? 'Ranked by number of wins (ties broken by head-to-head), then turned into league points.' : 'Ranked by score, then turned into league points (1st=10, 2nd=8…). The right-hand number is league points.'} />
+		</h2>
 		{#if data.results.length === 0}
 			<p class="text-sm text-slate-400">No results yet.</p>
 		{:else}
@@ -125,7 +129,10 @@
 	{#if isMatchGame}
 		<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-4">
 			<div class="mb-3 flex items-center justify-between">
-				<h2 class="font-bold">{isRoundRobin ? 'Fixtures' : 'Bracket'}</h2>
+				<h2 class="font-bold">
+					{isRoundRobin ? 'Fixtures' : 'Bracket'}
+					<InfoTip text={isRoundRobin ? 'Everyone plays everyone once. Tap the winner of each fixture (scores optional). Standings update by number of wins.' : 'Single-elimination knockout. Tap the winner of each match; they advance automatically.'} />
+				</h2>
 				{#if isAdmin}
 					<form method="POST" action="?/generateBracket" use:enhance>
 						<button class="rounded-lg bg-slate-800 px-3 py-1.5 text-sm font-semibold">

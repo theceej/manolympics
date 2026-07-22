@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import BottomNav from '$components/BottomNav.svelte';
+	import Onboarding from '$components/Onboarding.svelte';
 	import { logout } from '$lib/auth-client';
 	import type { LayoutData } from './$types';
 
@@ -50,6 +51,7 @@
 					<a href="/attendees" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>People</a>
 					<a href="/years" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Years</a>
 					<a href="/winners" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Hall of Fame</a>
+					<a href="/help" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Help</a>
 					{#if data.user?.role === 'admin'}
 						<a href="/settings" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Settings</a>
 					{/if}
@@ -65,3 +67,7 @@
 
 	<BottomNav />
 </div>
+
+{#if data.user}
+	<Onboarding userId={data.user.id} isAdmin={data.user.role === 'admin'} />
+{/if}

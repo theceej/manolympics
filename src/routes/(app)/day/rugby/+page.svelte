@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
+	import InfoTip from '$components/InfoTip.svelte';
 	import type { PageData } from './$types';
 	import type { LayoutData } from '../../$types';
 
@@ -47,7 +48,10 @@
 	<p class="rounded-xl border border-dashed border-slate-700 p-6 text-center text-sm text-slate-400">Create a year first.</p>
 {:else}
 	<div class="flex items-center justify-between">
-		<h2 class="font-bold">Six Nations</h2>
+		<h2 class="font-bold">
+			Six Nations
+			<InfoTip text="“Live sync” pulls today's scores automatically. You can also type scores in yourself — anything you enter by hand won't be overwritten by a later sync." />
+		</h2>
 		<button onclick={refresh} disabled={refreshing} class="rounded-lg bg-slate-800 px-3 py-1.5 text-sm font-semibold disabled:opacity-50">
 			{refreshing ? 'Syncing…' : '↻ Live sync'}
 		</button>

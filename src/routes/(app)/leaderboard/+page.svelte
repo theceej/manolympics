@@ -1,5 +1,6 @@
 <script lang="ts">
 	import AttendeeChip from '$components/AttendeeChip.svelte';
+	import InfoTip from '$components/InfoTip.svelte';
 	import { fmtPoints, medalFor } from '$lib/utils';
 	import type { PageData } from './$types';
 	import type { LayoutData } from '../$types';
@@ -9,7 +10,10 @@
 	const gameById = $derived(Object.fromEntries(data.games.map((g) => [g.id, g])));
 </script>
 
-<h1 class="text-2xl font-black">Leaderboard</h1>
+<h1 class="text-2xl font-black">
+	Leaderboard
+	<InfoTip text="League points from every game, added up. Each game turns finishing position into points (1st=10, 2nd=8, 3rd=6…). Tap a person to see their per-game breakdown." />
+</h1>
 {#if data.currentEdition}
 	<p class="text-sm text-slate-400">{data.currentEdition.title ?? `Manolympics ${data.currentEdition.year}`}</p>
 {/if}

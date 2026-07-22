@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import AttendeeChip from '$components/AttendeeChip.svelte';
+	import InfoTip from '$components/InfoTip.svelte';
 	import type { PageData } from './$types';
 	import type { LayoutData } from '../../$types';
 
@@ -15,7 +16,10 @@
 {:else}
 	<!-- Settle-up -->
 	<section class="rounded-2xl border border-slate-800 bg-slate-900/50 p-4">
-		<h2 class="mb-3 font-bold">Settle up</h2>
+		<h2 class="mb-3 font-bold">
+			Settle up
+			<InfoTip text="Log who paid for what and how it was split. This shows the fewest payments needed to square everyone up. +£ means they're owed, −£ means they owe." />
+		</h2>
 		{#if data.transfers.length === 0}
 			<p class="text-sm text-slate-400">All square — nothing to settle.</p>
 		{:else}
