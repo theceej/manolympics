@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { passkeysSupported, registerPasskey } from '$lib/auth-client';
 	import type { PageData } from './$types';
@@ -11,6 +12,11 @@
 	let loading = $state(false);
 	let err = $state<string | null>(null);
 	const supported = passkeysSupported();
+
+	// Pre-fill the invite code when arriving via a shared join link.
+	onMount(() => {
+		if (data.invite) invite = data.invite;
+	});
 
 	async function submit(e: SubmitEvent) {
 		e.preventDefault();
