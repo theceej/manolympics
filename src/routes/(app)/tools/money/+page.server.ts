@@ -1,13 +1,15 @@
 import { fail } from '@sveltejs/kit';
 import { desc, eq, inArray } from 'drizzle-orm';
 import { db } from '$server/db';
-import { attendee, edition, expense, expenseShare } from '$server/db/schema';
+import { edition, expense, expenseShare } from '$server/db/schema';
 import { computeBalances, settleUp, type ExpenseInput } from '$server/expenses';
+import { listPeople } from '$server/people';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {
 	const { currentEdition } = await parent();
-	const attendees = await db.select().from(attendee).all();
+	// Everyone, flagged with who's here this year — past payers still need naming.
+	const attendees = await listPeople(currentEdition?.id);
 	if (!currentEdition) return { expenses: [], attendees, balances: [], transfers: [] };
 
 	const expenses = await db

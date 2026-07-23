@@ -7,7 +7,7 @@
 
 	let { data, form }: { data: PageData & LayoutData; form: { error?: string } | null } = $props();
 	let adding = $state(false);
-	const active = $derived(data.attendees.filter((a) => a.active));
+	const active = $derived(data.attendees.filter((a) => a.here));
 	const gbp = (n: number) => `£${Math.abs(n).toFixed(2)}`;
 </script>
 

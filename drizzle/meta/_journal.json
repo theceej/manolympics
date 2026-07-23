@@ -15,6 +15,13 @@
       "when": 1784737783309,
       "tag": "0001_meals_photos_history",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1784791022039,
+      "tag": "0002_single_people_list",
+      "breakpoints": true
     }
   ]
 }

@@ -1,14 +1,9 @@
-import { asc, eq } from 'drizzle-orm';
-import { db } from '$server/db';
-import { attendee } from '$server/db/schema';
+import { attendingPeople } from '$server/people';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	const attendees = await db
-		.select()
-		.from(attendee)
-		.where(eq(attendee.active, true))
-		.orderBy(asc(attendee.name))
-		.all();
+export const load: PageServerLoad = async ({ parent }) => {
+	const { currentEdition } = await parent();
+	// Only the people actually turning up this year go in the pool.
+	const attendees = await attendingPeople(currentEdition?.id);
 	return { attendees };
 };

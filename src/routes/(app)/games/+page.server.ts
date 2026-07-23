@@ -1,7 +1,8 @@
 import { fail } from '@sveltejs/kit';
 import { asc, desc, eq, sql } from 'drizzle-orm';
 import { db } from '$server/db';
-import { attendee, edition, game, gameParticipant, round } from '$server/db/schema';
+import { edition, game, gameParticipant, round } from '$server/db/schema';
+import { attendingPeople } from '$server/people';
 import type { Actions, PageServerLoad } from './$types';
 
 // The event's usual line-up — seeded on demand, then carried forward each year via
@@ -80,8 +81,8 @@ export const actions: Actions = {
 			orderIndex: maxOrder + 1
 		});
 
-		// Default: everyone active is a participant; the game page can trim this.
-		const actives = await db.select().from(attendee).where(eq(attendee.active, true)).all();
+		// Default: everyone down for this year is a participant; the game page can trim this.
+		const actives = await attendingPeople(currentEdition.id);
 		for (const a of actives) {
 			await db.insert(gameParticipant).values({ gameId: id, attendeeId: a.id });
 		}
@@ -101,7 +102,7 @@ export const actions: Actions = {
 			.where(eq(game.editionId, currentEdition.id))
 			.all();
 		const have = new Set(existing.map((g) => g.name.toLowerCase()));
-		const actives = await db.select().from(attendee).where(eq(attendee.active, true)).all();
+		const actives = await attendingPeople(currentEdition.id);
 
 		let order =
 			((await db

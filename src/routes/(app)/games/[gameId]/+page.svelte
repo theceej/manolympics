@@ -107,7 +107,7 @@
 			</button>
 			{#if managePeople}
 				<ul class="mt-3 flex flex-col gap-1">
-					{#each data.attendees.filter((a) => a.active || participantIds.has(a.id)) as a (a.id)}
+					{#each data.attendees.filter((a) => a.here || participantIds.has(a.id)) as a (a.id)}
 						<li>
 							<form method="POST" action="?/toggleParticipant" use:enhance class="flex items-center gap-3">
 								<input type="hidden" name="attendeeId" value={a.id} />

@@ -55,17 +55,25 @@ export const inviteCode = sqliteTable('invite_code', {
 		.default('member'),
 	expiresAt: integer('expires_at', { mode: 'timestamp' }),
 	usedByUserId: text('used_by_user_id').references(() => user.id, { onDelete: 'set null' }),
+	// Invites are normally sent from a row in the People list; whoever redeems this code is
+	// linked to that person instead of creating a second one.
+	attendeeId: text('attendee_id').references(() => attendee.id, { onDelete: 'cascade' }),
 	createdAt: now()
 });
 
 // ─── People ──────────────────────────────────────────────────────────────────
 
+/**
+ * The single list of people. One row per human, whether or not they have a login —
+ * registering links a user to their row (see edition_absence for per-year availability).
+ */
 export const attendee = sqliteTable('attendee', {
 	id: id(),
 	name: text('name').notNull(),
 	emoji: text('emoji'),
 	color: text('color'), // hex accent for avatar chips
 	photo: text('photo'), // resized square avatar as a data: URL (kept small, client-side)
+	// false = archived: left the crew for good. For "can't make it this year" use edition_absence.
 	active: integer('active', { mode: 'boolean' }).notNull().default(true),
 	userId: text('user_id').references(() => user.id, { onDelete: 'set null' }),
 	createdAt: now()
@@ -86,6 +94,24 @@ export const edition = sqliteTable('edition', {
 	pointScheme: text('point_scheme').notNull().default('[10,8,6,5,4,3,2,1]'),
 	createdAt: now()
 });
+
+/**
+ * Someone who can't make it in a given year. Absence is the exception, so only the people
+ * sitting a year out get a row — everyone active is assumed to be coming.
+ */
+export const editionAbsence = sqliteTable(
+	'edition_absence',
+	{
+		id: id(),
+		editionId: text('edition_id')
+			.notNull()
+			.references(() => edition.id, { onDelete: 'cascade' }),
+		attendeeId: text('attendee_id')
+			.notNull()
+			.references(() => attendee.id, { onDelete: 'cascade' })
+	},
+	(t) => [uniqueIndex('edition_absence_unq').on(t.editionId, t.attendeeId)]
+);
 
 // ─── Games ─────────────────────────────────────────────────────────────────────
 
@@ -286,6 +312,7 @@ export const expenseShare = sqliteTable(
 export type User = typeof user.$inferSelect;
 export type Attendee = typeof attendee.$inferSelect;
 export type Edition = typeof edition.$inferSelect;
+export type InviteCode = typeof inviteCode.$inferSelect;
 export type Game = typeof game.$inferSelect;
 export type Round = typeof round.$inferSelect;
 export type Score = typeof score.$inferSelect;

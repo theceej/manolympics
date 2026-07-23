@@ -75,6 +75,8 @@ export type ChallengePayload = {
 	displayName?: string;
 	role?: 'admin' | 'member';
 	invite?: string;
+	// The People-list row this invite was sent from; the new account links to it.
+	attendeeId?: string;
 };
 
 export function setChallenge(cookies: Cookies, data: ChallengePayload): void {

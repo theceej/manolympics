@@ -10,7 +10,10 @@ game, crown a yearly champion, keep a hall of fame, and use it as a companion on
 **Core (built)**
 - 🔐 **Passkey login** (WebAuthn) — no passwords. First user bootstraps as admin; others
   join with invite codes.
-- 👥 **People** roster (static-ish, editable).
+- 👥 **People** — one list for everyone, whether or not they've signed up. Invite someone
+  straight from their row; registering links to that entry instead of creating a second one.
+  Can't make it this year? Mark them out for that year — they stay on the list and keep their
+  history.
 - 📅 **Years** — one edition per year, with **copy games & venues from a previous year** to
   save setup time. Champion recorded per year.
 - 🎯 **Games** in four shapes, all feeding one leaderboard:
@@ -41,8 +44,9 @@ npm run dev                 # http://localhost:5173
 ```
 
 Open the app, go to **Create account**, and register a passkey with the bootstrap email —
-you become the admin. Add people, create a year, add games, and start scoring. Generate
-invite codes under the avatar menu → **Settings** to let others in.
+you become the admin. Add people, create a year, add games, and start scoring. To let others
+in, tap **Invite to app** on their row under **People** (or generate a code under the avatar
+menu → **Settings**). Your own name and photo live under **Your account**.
 
 > Passkeys work on `localhost` out of the box. Safari/iOS need `RP_ID` and `ORIGIN` to match
 > the host exactly.
