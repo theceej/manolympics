@@ -48,6 +48,7 @@
 							<span class="ml-1 rounded bg-brand-600/30 px-1.5 py-0.5 text-brand-300">admin</span>
 						{/if}
 					</div>
+					<a href="/account" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Your account</a>
 					<a href="/attendees" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>People</a>
 					<a href="/years" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Years</a>
 					<a href="/winners" class="block px-4 py-2.5 text-sm hover:bg-slate-800" onclick={() => (menuOpen = false)}>Hall of Fame</a>

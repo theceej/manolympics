@@ -13,6 +13,8 @@
 		<div class="mt-2 space-y-2 text-sm text-slate-300">
 			<p>We use <strong>passkeys</strong> — no passwords. You sign in with your phone or laptop's Face&nbsp;ID, fingerprint, or PIN.</p>
 			<p>The first person to register becomes the <strong>admin</strong>. After that, everyone joins with an <strong>invite code</strong> an admin generates.</p>
+			<p>Signing up puts you straight on the <strong>People</strong> list — or links you to your existing entry if you're already on it. Nobody has to be added twice.</p>
+			<p>Change your name or photo any time under the avatar menu → <strong>Your account</strong>.</p>
 			<p>Sign in on each device you want to use — you can add a passkey per device.</p>
 		</div>
 	</details>
@@ -68,13 +70,14 @@
 			<summary class="cursor-pointer font-bold text-brand-200">⚙️ Admin: setting up a year</summary>
 			<ol class="mt-2 list-decimal space-y-1.5 pl-5 text-sm text-slate-300">
 				<li>Create the year under <strong>Years</strong> (or copy games from a previous year to save time).</li>
-				<li>Add everyone under <strong>People</strong> (photos optional).</li>
+				<li>Add everyone under <strong>People</strong> (photos optional), then tap <strong>Invite to app</strong> on each of them so they can join and help score.</li>
+				<li>Anyone who can't make it this year: tap <strong>“Can't make [year]”</strong> on their row — they stay on the list and keep their history, they're just left out of this year's games.</li>
 				<li>Add games — or tap <strong>“Add our usual games”</strong> for the regulars.</li>
 				<li>Add venues and the day's timeline under <strong>Day</strong>.</li>
 				<li>On the day: open a game, set it <strong>Live</strong>, and score away. Set <strong>Final</strong> when done.</li>
-				<li>Generate invite codes in <strong>Settings</strong> so everyone can join and help score.</li>
 			</ol>
 			<p class="mt-2 text-sm text-slate-400">Old years with no per-game data? Add them under Years → <em>Enter past results</em>.</p>
+			<p class="mt-2 text-sm text-slate-400">Someone gone for good? <strong>Archive</strong> them instead — their past results stay put.</p>
 		</details>
 	{/if}
 </div>

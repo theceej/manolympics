@@ -1,15 +1,8 @@
 import { error, fail } from '@sveltejs/kit';
 import { and, asc, eq, isNull, sql } from 'drizzle-orm';
 import { db } from '$server/db';
-import {
-	attendee,
-	edition,
-	game,
-	gameParticipant,
-	match,
-	round,
-	score
-} from '$server/db/schema';
+import { edition, game, gameParticipant, match, round, score } from '$server/db/schema';
+import { listPeople } from '$server/people';
 import { computeGameResults, gameRounds } from '$server/results';
 import { generateBracket, generateRoundRobin, recordMatch } from '$server/bracket';
 import type { Actions, PageServerLoad } from './$types';
@@ -19,7 +12,8 @@ export const load: PageServerLoad = async ({ params }) => {
 	if (!g) throw error(404, 'Game not found');
 
 	const ed = await db.select().from(edition).where(eq(edition.id, g.editionId)).get();
-	const attendees = await db.select().from(attendee).orderBy(asc(attendee.name)).all();
+	// Flagged with who's around for this game's year, so the picker can hide the rest.
+	const attendees = await listPeople(g.editionId);
 	const attendeeById = Object.fromEntries(attendees.map((a) => [a.id, a]));
 
 	const participants = await db

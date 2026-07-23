@@ -28,6 +28,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	const userCount = (await db.select({ n: sql<number>`count(*)` }).from(user).get())?.n ?? 0;
 
 	let role: 'admin' | 'member' = 'member';
+	let attendeeId: string | undefined;
 	if (userCount === 0 && email === (env.BOOTSTRAP_ADMIN_EMAIL ?? '').toLowerCase()) {
 		role = 'admin';
 	} else {
@@ -41,6 +42,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		if (code.expiresAt && code.expiresAt.getTime() < Date.now())
 			throw error(403, 'That invite code has expired.');
 		role = code.role;
+		attendeeId = code.attendeeId ?? undefined;
 	}
 
 	const userId = crypto.randomUUID();
@@ -51,7 +53,8 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 		email,
 		displayName,
 		role,
-		invite: invite || undefined
+		invite: invite || undefined,
+		attendeeId
 	});
 
 	return json(options);
